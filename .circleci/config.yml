@@ -56,15 +56,21 @@ jobs:
           command: |
             echo "$GOOGLE_APPLICATION_CREDENTIALS" | base64 --decode > android/app/google-services.json
 
-      - run:
-          name: Assemble release build
-          command: |
-            TAG_NAME=$(echo $CIRCLE_TAG | cut -d'-' -f1)
-            VERSION_CODE=$(echo $TAG_NAME | cut -d'v' -f2)
-            flutter build apk --split-per-abi --release --build-name=$VERSION_CODE
+      # - run:
+      #     name: Assemble release build
+      #     command: |
+      #       TAG_NAME=$(echo $CIRCLE_TAG | cut -d'-' -f1)
+      #       VERSION_CODE=$(echo $TAG_NAME | cut -d'v' -f2)
+      #       flutter build apk --split-per-abi --release --build-name=$VERSION_CODE
 
-      - store_artifacts:
-          path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+      - run:
+          name: Comment on PR
+          command: |
+            PR_NUMBER=${CIRCLE_PULL_REQUEST##*/}
+            echo "PR number: $PR_NUMBER"
+
+      # - store_artifacts:
+      #     path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
 
 workflows:
   version: 2
