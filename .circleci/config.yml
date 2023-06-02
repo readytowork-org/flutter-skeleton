@@ -68,6 +68,14 @@ jobs:
           command: |
             PR_NUMBER=${CIRCLE_PULL_REQUEST##*/}
             echo "PR number: $PR_NUMBER"
+            API_TOKEN="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"
+            COMMENT="This is test comment"
+            API_URL="https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${PR_NUMBER}/comments"
+            curl -X POST \
+              -H "Authorization: Bearer ${API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"body\": \"${COMMENT}\"}" \
+              "${API_URL}"
 
       # - store_artifacts:
       #     path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
