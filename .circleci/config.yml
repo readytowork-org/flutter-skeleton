@@ -73,7 +73,7 @@ jobs:
             echo "CIRCLE_PROJECT_USERNAME: $CIRCLE_PROJECT_USERNAME"
             echo "CIRCLE_PROJECT_REPONAME: $CIRCLE_PROJECT_REPONAME"
 
-            API_TOKEN="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"
+            API_TOKEN="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"
             COMMENT="This is test comment"
             API_URL="https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${PR_NUMBER}/comments"
             curl -X POST \
