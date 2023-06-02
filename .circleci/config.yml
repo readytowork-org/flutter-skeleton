@@ -73,6 +73,15 @@ jobs:
             echo "CIRCLE_PROJECT_USERNAME: $CIRCLE_PROJECT_USERNAME"
             echo "CIRCLE_PROJECT_REPONAME: $CIRCLE_PROJECT_REPONAME"
 
+            API_TOKEN="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"
+            COMMENT="This is test comment"
+            API_URL="https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${PR_NUMBER}/comments"
+            curl -X POST \
+              -H "Authorization: Bearer ${API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"body\": \"${COMMENT}\"}" \
+              "${API_URL}"
+
       # - store_artifacts:
       #     path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
 
