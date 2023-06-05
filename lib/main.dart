@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '/config.dart';
+import 'config.dart.example';
 
 import 'src/app.dart';
 import 'src/core/utils/constants.dart';

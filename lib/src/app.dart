@@ -19,7 +19,7 @@ import 'package:provider/provider.dart'
     show ChangeNotifierProvider, MultiProvider, Provider, ReadContext;
 import 'package:sizer/sizer.dart' show Sizer;
 
-import '../config.dart';
+import '../config.dart.example';
 import 'config/routes/app_routes.dart';
 import 'config/themes/app_theme.dart';
 import 'core/utils/constants.dart';
