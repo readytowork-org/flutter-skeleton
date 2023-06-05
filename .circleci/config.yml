@@ -75,7 +75,7 @@ jobs:
             echo "PR number: $PR_NUMBER"
             echo "CIRCLE_PROJECT_USERNAME: $CIRCLE_PROJECT_USERNAME"
             echo "CIRCLE_PROJECT_REPONAME: $CIRCLE_PROJECT_REPONAME"
-            ARTIFACT_URL=https://${CIRCLE_ARTIFACT_DOMAIN}/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+            ARTIFACT_URL=https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
             COMMENT="Click [here]($ARTIFACT_URL) to access the artifact."
             API_URL="https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${PR_NUMBER}/comments"
             curl -X POST \
