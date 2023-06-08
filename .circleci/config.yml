@@ -23,12 +23,11 @@ jobs:
           name: Initializing the Config variables
           command: |
             echo "$CONFIG" | base64 --decode > lib/config.dart
-            echo "$FIREBASE_OPTIONS" | base64 --decode > lib/firebase_options.dart
 
       - run:
           name: Update App Name
           command: |
-            sed -i "s/android:label=\".*\"/android:label=\"$APP_NAME\"/" android/app/src/main/AndroidManifest.xml
+            sed -i "s/android:label=\".*\"/android:label=\"$CIRCLE_BRANCH\"/" android/app/src/main/AndroidManifest.xml
 
       - run:
           name: Initializing the Local properties variables
@@ -50,21 +49,15 @@ jobs:
           name: Initializing the key store variables
           command: |
             echo "$KEYSTORE" | base64 --decode > android/app/keystore.jks
-
-      - run:
-          name: Add Google services to App
-          command: |
-            echo "$GOOGLE_APPLICATION_CREDENTIALS" | base64 --decode > android/app/google-services.json
-
       - run:
           name: Assemble release build
           command: |
             TAG_NAME=$(echo $CIRCLE_TAG | cut -d'-' -f1)
             VERSION_CODE=$(echo $TAG_NAME | cut -d'v' -f2)
-            flutter build apk --split-per-abi --release --build-name=$VERSION_CODE
+            flutter build apk --release --build-name=$VERSION_CODE
 
       - store_artifacts:
-          path: build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+          path: build/app/outputs/apk/release/app-release.apk
 
       - run:
           name: Comment on PR
@@ -72,10 +65,7 @@ jobs:
             PR_NUMBER=${CIRCLE_PULL_REQUEST##*/}
             CIRCLE_PROJECT_USERNAME=${CIRCLE_PROJECT_USERNAME}
             CIRCLE_PROJECT_REPONAME=${CIRCLE_PROJECT_REPONAME}
-            echo "PR number: $PR_NUMBER"
-            echo "CIRCLE_PROJECT_USERNAME: $CIRCLE_PROJECT_USERNAME"
-            echo "CIRCLE_PROJECT_REPONAME: $CIRCLE_PROJECT_REPONAME"
-            ARTIFACT_URL=https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk
+            ARTIFACT_URL=https://output.circle-artifacts.com/output/job/${CIRCLE_WORKFLOW_JOB_ID}/artifacts/${CIRCLE_NODE_INDEX}/build/app/outputs/apk/release/app-release.apk
             COMMENT="Click [here]($ARTIFACT_URL) to download the app."
             API_URL="https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${PR_NUMBER}/comments"
             curl -X POST \
