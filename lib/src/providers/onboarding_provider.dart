@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart' show ChangeNotifier;
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../injector.dart';
 
@@ -19,6 +18,3 @@ class OnboardingProvider with ChangeNotifier {
     notifyListeners();
   }
 }
-
-final onBoardingProvider =
-    ChangeNotifierProvider((ref) => OnboardingProvider());

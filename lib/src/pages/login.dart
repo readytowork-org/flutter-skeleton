@@ -1,23 +1,23 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:provider/provider.dart';
 
 import '../config/themes/colors.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/atoms/text_input.dart';
 
-class Login extends ConsumerStatefulWidget {
+class Login extends StatefulWidget {
   static const String routeName = "/login";
 
   const Login({super.key});
 
   @override
-  ConsumerState<Login> createState() => _LoginState();
+  State<Login> createState() => _LoginState();
 }
 
-class _LoginState extends ConsumerState<Login> {
+class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormBuilderState>();
 
   onPressed() {
@@ -69,8 +69,8 @@ class _LoginState extends ConsumerState<Login> {
               const SizedBox(height: 18),
               OutlinedButton(
                 onPressed: () {
-                  ref.read(authProvider).setUserLoggedIn(
-                        !ref.read(authProvider).loggedIn,
+                  context.read<AuthProvider>().setUserLoggedIn(
+                        !context.read<AuthProvider>().loggedIn,
                       );
                   return;
                 },

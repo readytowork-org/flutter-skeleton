@@ -1,5 +1,5 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart' show GoRoute, GoRouter;
+import 'package:provider/provider.dart' show ReadContext;
 
 import '../../pages/demo.dart';
 import '../../pages/home.dart';
@@ -11,8 +11,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/onboarding_provider.dart';
 
 class AppRouter extends GoRouter {
-  final WidgetRef ref;
-  AppRouter({super.refreshListenable, required this.ref})
+  AppRouter({super.refreshListenable})
       : super(
           initialLocation: Onboarding.routeName,
           routes: <GoRoute>[
@@ -20,7 +19,7 @@ class AppRouter extends GoRouter {
               path: Onboarding.routeName,
               builder: (context, state) => const Onboarding(),
               redirect: (context, state) =>
-                  ref.read(onBoardingProvider).shouldShowOnboardingPage
+                  context.read<OnboardingProvider>().shouldShowOnboardingPage
                       ? Onboarding.routeName
                       : null,
             ),
@@ -46,7 +45,7 @@ class AppRouter extends GoRouter {
           ],
           errorBuilder: (context, state) => const NotFoundPage(),
           redirect: (context, state) {
-            final loggedIn = ref.read(authProvider).loggedIn;
+            final loggedIn = context.read<AuthProvider>().loggedIn;
             final loggingIn = state.matchedLocation == Login.routeName;
 
             if (!loggedIn && !loggingIn) return Login.routeName;

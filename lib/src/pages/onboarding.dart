@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/onboarding_provider.dart';
 
-class Onboarding extends ConsumerStatefulWidget {
+class Onboarding extends StatefulWidget {
   static const String routeName = "/onboarding";
 
   const Onboarding({super.key});
 
   @override
-  ConsumerState<Onboarding> createState() => _OnboardingState();
+  State<Onboarding> createState() => _OnboardingState();
 }
 
-class _OnboardingState extends ConsumerState<Onboarding> {
+class _OnboardingState extends State<Onboarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,7 @@ class _OnboardingState extends ConsumerState<Onboarding> {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            ref.read(onBoardingProvider).onboardingFinish();
+            context.read<OnboardingProvider>().onboardingFinish();
           },
           child: const Text("Finish Onboarding"),
         ),
